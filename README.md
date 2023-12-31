@@ -5,4 +5,4 @@ Built and trained a Convolutional Neural Network to work on a dataset of images 
 
 An image binary classification task to assign labels to a given image as '0' (Normal) and '1' (Infected)
 
-Trained a CNN Model with ROC-AUC Score of 0.955.
+Trained a CNN Model with ROC-AUC Score of 0.97 on the test data.

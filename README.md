@@ -3,6 +3,6 @@
 
 Built and trained a Convolutional Neural Network to work on a dataset of images contatining infected and uninfected X-ray samples.
 
-An image binary classification task to assign labels to a given image as '0' (Normal) and '1' (Infected)
+An image binary classification task to assign labels to a given image as '0' (Infected) and '1' (Normal)
 
-Trained a CNN Model with ROC-AUC Score of 0.97 on the test data.
+Trained a CNN Model with a Test Accuracy of *99%* and a ROC-AUC Score of *1.0* on the validation data.

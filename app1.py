@@ -2,6 +2,7 @@ import streamlit as st
 import tensorflow as tf
 from PIL import Image
 import numpy as np
+import time
 
 # Load the saved model
 model = tf.keras.models.load_model('CNN_model.h5')
@@ -21,25 +22,65 @@ def predict(image):
     return predictions
 
 # Streamlit app code
-st.title("Image Classification with Deep Learning")
-st.write("Upload an image and let the model predict its class.")
+st.markdown(
+    """
+    <style>
+    .title {
+        text-align: center;
+        font-size: 36px;
+        margin-bottom: 30px;
+    }
+    .upload-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+    .prediction-results {
+        text-align: center;
+        margin-top: 20px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Streamlit app code
+st.title("MedZ: Deep Learning based Medical Image Classifier")
+st.markdown("---")
+
+st.markdown('<p class="title">Upload an image to predict normal or infected.</p>', unsafe_allow_html=True)
 
 uploaded_file = st.file_uploader("Choose an image...", type="jpg")
 
 if uploaded_file is not None:
-    # Display the uploaded image
-    image = Image.open(uploaded_file)
-    st.image(image, caption="Uploaded Image.", use_column_width=True)
-    
-    # Perform prediction
-    with st.spinner('Predicting...'):
-        result = predict(uploaded_file)
+    # Display the uploaded image with border
+    st.image(uploaded_file, caption="Uploaded Image", use_column_width=True, output_format="JPEG")
 
-    # Define classes (change these according to your model)
-    classes = ['Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5']
-    
-    # Display the prediction results
-    st.subheader("Prediction Results:")
-    class_index = np.argmax(result)
-    st.write(f"Predicted Class: {classes[class_index]}")
-    st.write(f"Confidence: {result[0][class_index]*100:.2f}%")
+    # Perform prediction
+    if st.button("Predict"):
+        result = predict(uploaded_file)
+        progress_bar = st.progress(0)
+        status_text = st.empty()
+          
+         
+        for i in range(100):
+            progress_bar.progress(i + 1)
+            status_text.text(f'Progress: {i}%')
+            time.sleep(0.00)
+        
+        status_text.text('Done!')
+        
+        # Display the prediction results
+        st.write("Prediction Results:")
+        prediction_label = "Normal" if result >= 0.5 else "Infected"
+        if prediction_label == "Normal":
+            st.balloons()
+            st.success(f"The image is predicted as {prediction_label}")
+        else :
+            st.snow()
+            st.warning(f'Warning : The image is predicted as {prediction_label}', icon="⚠️")
+            
+st.markdown("---")
+st.write("Developed by Tejas Sharma")
+st.write("Copyright © 2023. All rights reserved.")

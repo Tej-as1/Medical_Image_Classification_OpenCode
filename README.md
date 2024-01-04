@@ -1,5 +1,4 @@
 # Medical_Image_Classification_OpenCode
-*CONTRIBUTION IN THE MEDICAL_CLASSIFICATION_REPOSITORY IN OPENCODE'23 IIITA*
 
 *Deployed WebApp - https://medzdeployement.streamlit.app/*
 
